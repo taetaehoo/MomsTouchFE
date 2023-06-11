@@ -1,0 +1,42 @@
+.DivUl {
+    display: flex;
+    flex-direction: row;
+    width: 40vw;
+    height: 80vh;
+    border-right: 1px solid black;
+}
+
+.DivLi {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    border: 1px solid black;
+    font-weight: bold;
+    height: 6vh;
+}
+
+.DivLi:hover {
+    cursor: pointer;
+    background: #61dafb;
+    transition: 0.5s;
+}
+
+.DivLi:active {
+    background: #61dafb;
+}
+
+.Flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.PTag {
+    font-size: 20px;
+    font-weight: bold;
+    background: coral;
+    height: calc(6vh + 2px);
+}
+
+.Menu {
+    border-right: 1px solid black;
+}

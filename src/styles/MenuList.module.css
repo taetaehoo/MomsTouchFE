@@ -1,0 +1,35 @@
+.DivUl {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.DivLi {
+    font-size: 20px;
+    font-weight: bold;
+    width: 25vw;
+}
+
+.DivLi:hover {
+    cursor: pointer;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    transition: 0.5s;
+}
+
+.NameTag {
+    display: inline-block;
+    float: left;
+}
+
+.PriceTag {
+    display: inline-block;
+    float: right;
+}
+
+.PTag {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    background: #61dafb;
+}
