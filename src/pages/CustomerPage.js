@@ -11,7 +11,7 @@ const CustomerPage = () => {
             <Header />
             <Routes>
                 <Route path={"/"} element={<MainPage />}></Route>
-                <Route path={"/detail/:itemId"} element={<MenuDetailPage />}></Route>
+                <Route path={"/detail/:shopId/:itemId"} element={<MenuDetailPage />}></Route>
                 <Route path={"/cart"} element={<OrderListPage />}></Route>
             </Routes>
         </>

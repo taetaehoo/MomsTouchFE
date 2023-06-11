@@ -1,18 +1,31 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '../styles/Item.module.css';
 import {Link} from "react-router-dom";
-
-const items = [
-    {id: 1, name: '햄'}, {id: 2, name: '버'}, {id: 3, name: '거'}, {id: 4, name: '먹'},
-    {id: 5, name: '고'}, {id: 6, name: '고'}, {id: 7, name: '싶'}, {id: 8, name: '다'}
-]
+import axiosInstance from "../apis/AxiosInstance";
 
 const ItemList = () => {
+    const [items, setItems] = useState({});
+    const [menus, setMenus] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axiosInstance.get("/api/shop/1/menus");
+            setItems(result.data);
+            setMenus(result.data.menuList)
+        }
+
+        fetchData();
+        console.log(items);
+    }, [])
+
+
+
     return (
         <ul className={styles.DivUl}>
-            {items.map(item => {
-                return <Link to={`/detail/${item.id}`} className={styles.LinkTag}><li key={item.id} className={styles.DivLi}>{item.name}</li></Link>
-            })}
+            {
+             menus && menus.map(menu => {
+                 return <Link to={`/detail/${1}/${menu.menuId}`}><li className={styles.DivLi} key={menu.menuId}><p>{menu.name}</p><p>{menu.price}</p></li></Link>
+                })
+            }
         </ul>
     );
 };
