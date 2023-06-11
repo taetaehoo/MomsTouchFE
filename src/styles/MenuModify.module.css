@@ -1,0 +1,35 @@
+.PTag {
+    float: left;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.PTagRight{
+    float: right;
+    background: salmon;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.FormTag {
+    text-align: center;
+}
+
+.Btn {
+    display: block;
+    margin: 0 auto;
+    width: 10vw;
+    height: 5vh;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.Btn:hover {
+
+    cursor: pointer;
+    background: beige;
+    transition: 1s;
+}
