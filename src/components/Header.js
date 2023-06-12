@@ -4,8 +4,8 @@ import {Link} from "react-router-dom";
 import axiosInstance from "../apis/AxiosInstance";
 const Header = () => {
     const login = () => {
-        axiosInstance.get("/login/oauth2/code/google").then(result => {
-            console.log(result);
+        axiosInstance.get("").then(result => {
+            console.log(result.data);
         })
     }
     return (
@@ -14,7 +14,7 @@ const Header = () => {
                 <h2 className={styles.Logo}><Link to={"/"} className={styles.LinkTag}>MomsTouch</Link></h2>
             </div>
             <div className={styles.Box}>
-                <h4 className={styles.Login} onClick={() => login()}>Login</h4>
+                <h4 className={styles.Login}><a href={"http://localhost:8071/oauth2/authorization/google"}>Login</a></h4>
                 <h4 className={styles.Order}><Link to={"/cart"} className={styles.LinkTag}>Cart</Link></h4>
             </div>
         </div>
