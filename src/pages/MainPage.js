@@ -13,7 +13,7 @@ const MainPage = () => {
 
             })
             .catch(err => console.log(err));
-    })
+    }, [])
     return (
         <>
             <ItemList className={styles.ItemList}></ItemList>
