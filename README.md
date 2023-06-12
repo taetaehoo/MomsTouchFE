@@ -2,9 +2,12 @@
 
 이번 프로젝트 하며 배운 점
 1. git folk. -> 내가 이렇게 수정했는데 이거 가져가서 확인해보시구 괜찮으면 합쳐주세요!
+
 2. axios instance. 기존에 모듈화를 할 때는 baseUrl만 분리하여 다른 config 파일에 보관하여 사용했다.(물론 이 또한, 모듈화의 일종이긴 하다.)
 하지만, axios 모듈은 자체적으로 instance를 지원한다. axios.create함수로 axiosInstance를 뽑아내면 정말 baseURL의 저장 또한 필요 없어진다.(의존성 감소)
 물론, 그래도 baseUrl은 다른 파일 혹은 .env파일에 보관하는게 안전하다.
+
+3. .env를 사용할 때는 꼭 REACT_APP을 앞에 붙여주자 
 
 
 
