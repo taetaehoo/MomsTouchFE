@@ -1,60 +1,92 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 
-const OptionInput = () => {
-    const [options, setOptions] = useState([
-        { option: "", optionPrice: "" }
+const OptionInput = ({ handleOptionGroupList }) => {
+    const [optionGroups, setOptionGroups] = useState([
+        { groupName: "", options: [{ option: "", optionPrice: "" }] }
     ]);
 
-    const handleChange = (i, e) => {
-        const values = [...options];
-        values[i][e.target.name] = e.target.value;
-        setOptions(values);
+    const handleGroupNameChange = (i, e) => {
+        const newGroups = [...optionGroups];
+        newGroups[i].groupName = e.target.value;
+        setOptionGroups(newGroups);
     };
 
-    const handleAdd = () => {
-        const values = [...options];
-        values.push({ option: "", optionPrice: "" });
-        setOptions(values);
+    const handleOptionChange = (i, j, e) => {
+        const newGroups = [...optionGroups];
+        newGroups[i].options[j][e.target.name] = e.target.value;
+        setOptionGroups(newGroups);
     };
 
-    const handleRemove = (i) => {
-        const values = [...options];
-        values.splice(i, 1);
-        setOptions(values);
+    useEffect(() => {
+        handleOptionGroupList(optionGroups);
+    }, [optionGroups, handleOptionGroupList]);
+
+    const handleOptionAdd = (i) => {
+        const newGroups = [...optionGroups];
+        newGroups[i].options.push({ option: "", optionPrice: "" });
+        setOptionGroups(newGroups);
+    };
+
+    const handleOptionRemove = (i, j) => {
+        const newGroups = [...optionGroups];
+        newGroups[i].options.splice(j, 1);
+        setOptionGroups(newGroups);
+    };
+
+    const handleOptionGroupAdd = () => {
+        setOptionGroups(prevGroups => [...prevGroups, { groupName: "", options: [{ option: "", optionPrice: "" }] }]);
+    };
+
+    const handleOptionGroupRemove = (i) => {
+        const newGroups = [...optionGroups];
+        newGroups.splice(i, 1);
+        setOptionGroups(newGroups);
     };
 
     return (
         <div>
-            {options.map((option, idx) => (
-                <div key={idx}>
+            {optionGroups.map((group, i) => (
+                <div key={i}>
                     <select
-                        name="optionGroup"
-                        value={option.optionGroup}
-                        onChange={e => handleChange(idx, e)}
+                        name="groupName"
+                        value={group.groupName}
+                        onChange={e => handleGroupNameChange(i, e)}
                     >
                         <option value="">--옵션 그룹 선택--</option>
+                        <option value="단품/세트 선택">단품/세트 선택</option>
                         <option value="사이드 선택">사이드 선택</option>
-                        <option value="음료 선택">음료 선택</option>
                         {/* 추가적으로 필요한 옵션 그룹들 */}
                     </select>
-                    <input
-                        type="text"
-                        name="option"
-                        placeholder="옵션"
-                        value={option.option}
-                        onChange={e => handleChange(idx, e)}
-                    />
-                    <input
-                        type="text"
-                        name="optionPrice"
-                        placeholder="옵션 가격"
-                        value={option.optionPrice}
-                        onChange={e => handleChange(idx, e)}
-                    />
-                    {options.length !== 1 && (
-                        <button onClick={() => handleRemove(idx)}>-</button>
+                    {group.options.map((option, j) => (
+                        <div key={j}>
+                            <input
+                                type="text"
+                                name="option"
+                                placeholder="옵션"
+                                value={option.option}
+                                onChange={e => handleOptionChange(i, j, e)}
+                            />
+                            <input
+                                type="text"
+                                name="optionPrice"
+                                placeholder="옵션 가격"
+                                value={option.optionPrice}
+                                onChange={e => handleOptionChange(i, j, e)}
+                            />
+                            {group.options.length !== 1 && (
+                                <button onClick={() => handleOptionRemove(i, j)}>-</button>
+                            )}
+                            {group.options.length - 1 === j && (
+                                <button onClick={() => handleOptionAdd(i)}>+</button>
+                            )}
+                        </div>
+                    ))}
+                    {optionGroups.length !== 1 && (
+                        <button onClick={() => handleOptionGroupRemove(i)}>그룹 삭제</button>
                     )}
-                    {options.length - 1 === idx && <button onClick={handleAdd}>+</button>}
+                    {optionGroups.length - 1 === i && (
+                        <button onClick={handleOptionGroupAdd}>그룹 추가</button>
+                    )}
                 </div>
             ))}
         </div>
