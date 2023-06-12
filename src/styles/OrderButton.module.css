@@ -6,12 +6,14 @@
     align-items: center;
     position: absolute;
     left: 35vw;
+    margin-top: 5vh;
 }
 
 .Button:hover {
     background: #61dafb;
     transition: 0.5s;
     border: none;
+    cursor: pointer;
 }
 
 .Button:hover .Letter {
@@ -24,3 +26,9 @@
     font-size: 100px;
     font-weight: bold;
 }
+
+.InputTag {
+    margin-right: 1vw;
+    text-align: center;
+}
+

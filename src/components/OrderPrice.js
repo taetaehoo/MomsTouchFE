@@ -41,7 +41,7 @@ const OrderPrice = ({list}) => {
 
     return (
         <>
-            <p>총 가격: {price}원</p>
+            <p className={styles.Sum}>총 가격: {price}원</p>
         </>
     );
 };

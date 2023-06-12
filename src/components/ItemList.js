@@ -14,16 +14,18 @@ const ItemList = () => {
         }
 
         fetchData();
-        console.log(items);
+
     }, [])
 
-
+    useEffect(() => {
+        console.log(items)
+    }, [items])
 
     return (
         <ul className={styles.DivUl}>
             {
              menus && menus.map(menu => {
-                 return <Link to={`/detail/${1}/${menu.menuId}`}><li className={styles.DivLi} key={menu.menuId}><p>{menu.name}</p><p>{menu.price}</p></li></Link>
+                 return <Link to={`/detail/${1}/${menu.menuId}`} className={styles.LinkTag}><li className={styles.DivLi} key={menu.menuId} ><img loading={"lazy"} src={process.env.REACT_APP_BASE_URL+`${menu.imageUrl}`}/><p>{menu.name}</p><p>{menu.price}원</p></li></Link>
                 })
             }
         </ul>

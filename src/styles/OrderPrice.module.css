@@ -9,3 +9,12 @@
     display: inline-block;
     font-weight: bold;
 }
+
+.Sum {
+    font-size: 20px;
+    font-weight: bold;
+    float: right;
+    display: block;
+    position: relative;
+    margin-bottom: 1vh;
+}

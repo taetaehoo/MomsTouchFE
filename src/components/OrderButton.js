@@ -98,8 +98,8 @@ const OrderButton = () => {
 
     return (
         <>
-            <input type={"text"} placeholder={"주소를 적으세요"} required={true} value={address} onChange={e => updateAddress(e.target.value)}/>
-            <input type={"tel"} placeholder={"전화번호를 적으세요"} required={true} value={phoneNum} onChange={e => updatePhoneNum(e.target.value)}/>
+            <input type={"text"} className={styles.InputTag} placeholder={"주소를 적으세요"} required={true} value={address} onChange={e => updateAddress(e.target.value)}/>
+            <input type={"tel"} className={styles.InputTag} placeholder={"전화번호를 적으세요"} required={true} value={phoneNum} onChange={e => updatePhoneNum(e.target.value)}/>
             <button className={styles.Button}><p className={styles.Letter} onClick={() => order()}>주문!</p></button>
         </>
     );
