@@ -19,6 +19,7 @@
 .DivLi:hover {
     background: beige;
     transition: 0.5s;
+    border-bottom: 1px solid gray;
 }
 
 .BasketUl {
