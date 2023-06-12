@@ -7,9 +7,9 @@ import {useNavigate} from "react-router-dom";
 const MainPage = () => {
     const navigator = useNavigate();
     useEffect(() => {
-        axiosInstance.get('/api/user/me',{withCredentials: true})
+        axiosInstance.get('/api/user',{withCredentials: true})
             .then(resp => {
-               resp.data.role === 'ROLE_ADMIN' ? navigator('/owner') : navigator('/')
+               resp.data.role === 'ROLE_OWNER' ? navigator('/owner') : navigator('/')
 
             })
             .catch(err => console.log(err));

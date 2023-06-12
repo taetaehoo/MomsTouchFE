@@ -14,9 +14,6 @@ const OrderListPage = () => {
             .catch(err => console.log(err))
     }, [])
 
-    useEffect(() => {
-        console.log(basketList)
-    }, [basketList])
 
     // TODO `/api/members/{memberId}/carts 로 리스트 가져오기
     return (

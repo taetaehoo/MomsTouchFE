@@ -3,38 +3,31 @@
     align-content: flex-start;
     flex-direction: column;
     flex-wrap: wrap;
-    margin: 0 auto;
     width: 90vw;
     height: 50vh;
     border: 1px solid #61dafb;
+    margin: 0 auto;
 }
 
 .DivLi {
-    width: 80%;
-    margin: 0.5vh 10%;
-    height: 5vh;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 1vh;
 }
 
 .DivLi:hover {
-    border-bottom: 1px solid plum;
+    background: beige;
     transition: 0.5s;
 }
 
-.ItemName {
-    display: inline-block;
-    text-align: left;
-    font-size: 20px;
-    font-weight: bold;
-    width: 49%;
-    height: 100%;
+.BasketUl {
+    display: flex;
+    flex-direction: row;
 }
 
-.ItemPrice {
-    display: inline-block;
-
-    text-align: right;
-    font-size: 15px;
-    font-weight: bold;
-    width: 49%;
-    height: 100%;
+.BasketLi {
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
 }
