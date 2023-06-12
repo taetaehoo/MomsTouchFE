@@ -4,8 +4,10 @@ import {Link} from "react-router-dom";
 const ShopBasket = () => {
     return (
         <>
-            <button className={styles.ShopBtn}><Link to={"/"} className={styles.LinkTag}>장바구니 담기</Link></button>
+            <button className={styles.ShopBtn}>장바구니 담기</button>
+            
         </>
+        // TODO Link tag 넣기
     );
 };
 

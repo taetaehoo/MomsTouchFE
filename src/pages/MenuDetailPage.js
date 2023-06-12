@@ -1,30 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import MenuDetailInfo from "../components/MenuDetailInfo";
-import MenuPlusBtnContainer from "../components/MenuPlusBtnContainer";
-import ShopBasket from "../components/ShopBasket";
-import {useParams} from "react-router-dom";
-import axiosInstance from "../apis/AxiosInstance";
+import React, { lazy, Suspense } from 'react';
+import { useParams } from "react-router-dom";
+
+const MenuDetailInfo = lazy(() =>  import("../components/MenuDetailInfo"));
+const MenuPlusBtnContainer = lazy(() => import("../components/MenuPlusBtnContainer"));
 
 const MenuDetailPage = () => {
-    const id = useParams("itemId");
-    const shopId = id.shopId;
-    const itemId = id.itemId;
+    const { itemId, shopId } = useParams();
 
-    const [name, setName] = useState({})
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await axiosInstance.get(`api/shop/${shopId}/menus/${itemId}`)
-            setName(result.data);
-        }
-
-        fetchData()
-    }, [])
     return (
         <>
-            <MenuDetailInfo menu = {name}/>
-            <MenuPlusBtnContainer menu = {name}/>
-            <ShopBasket />
+            <Suspense fallback={<div>Loading...</div>}>
+                <MenuDetailInfo itemId = {itemId} shopId = {shopId}/>
+            </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+                <MenuPlusBtnContainer itemId = {itemId} shopId = {shopId}/>
+            </Suspense>
         </>
     );
 };
