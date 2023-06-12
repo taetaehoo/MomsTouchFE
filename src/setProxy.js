@@ -3,7 +3,7 @@ import {createProxyMiddleware} from "http-proxy-middleware";
 module.exports = app => {
     app.use('/api',
         createProxyMiddleware({
-            target: 'http://202.31.202.9:80',
+            target: 'http://172.30.81.237/8071',
             changeOrigin: true,
         }))
 }
