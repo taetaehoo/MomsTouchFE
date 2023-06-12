@@ -1,5 +1,5 @@
-import React from 'react';
-import {useLocation, useSearchParams} from "react-router-dom";
+import React, {useEffect} from 'react';
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 
 const Token = () => {
     const location = useLocation();
@@ -7,9 +7,17 @@ const Token = () => {
 
     sessionStorage.setItem('accessToken', searchParam.get('id'))
 
+    const navigator = useNavigate();
+
+    useEffect(() => {
+        sessionStorage.setItem('accessToken', searchParam.get('id'))
+
+        navigator('/')
+
+    }, [])
     return (
         <>
-
+            안녕~
         </>
     );
 };

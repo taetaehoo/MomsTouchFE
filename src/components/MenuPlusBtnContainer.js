@@ -98,7 +98,7 @@ const MenuPlusBtnContainer = ({itemId, shopId}) => {
 
         console.log(postData);
 
-        axiosInstance.post(`/api/members/1/carts`, postData)
+        axiosInstance.post(`/api/carts`, postData)
             .then(result => console.log(result))
             .catch(err => console.log(err))
     }
