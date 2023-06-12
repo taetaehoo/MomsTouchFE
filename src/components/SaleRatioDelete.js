@@ -72,10 +72,12 @@ const SaleRatioDelete = () => {
                         삭제
                     </button>
                 </form>
+
             )}
             <form className={styles.FormButton} onSubmit={handleFormSubmit}>
-                <button className={styles.BtnTag} type="submit">추가 등록하기</button>
-            </form>
+            <button className={styles.BtnTag} type="submit">추가 등록하기</button>
+        </form>
+
         </div>
     );
 };
