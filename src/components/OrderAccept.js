@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../apis/AxiosInstance';
 import styles from '../styles/OrderAccept.module.css'
+import WebSocketModule from "../apis/WebSocketModule";
 
 const OrderAccept = () => {
     const [items, setItems] = useState([]);
+
+    const conn = new WebSocket('ws://localhost:8071/ws');
+
+    conn.onopen = () => {
+        conn.send(JSON.stringify({
+            from: "join-owner"
+        }))
+    }
+
+    conn.onmessage = event => {
+        console.log(event.data);
+    }
 
     // const items = [
     //     {id: 1, status: "대기중", address: "대구시 북구 관음동로 41"},
@@ -14,6 +27,7 @@ const OrderAccept = () => {
         return status.padStart(5, " ");
     }
 
+
     const addressNum = address => {
         return address.padStart(15, " ");
     }
@@ -22,7 +36,13 @@ const OrderAccept = () => {
         try {
             console.log(item);
             const response = await axios.post(`api/order/${item.orderId}`); // 주문접수
-            // 응답이 성공적이면 상태 업데이트하기
+            conn.send(JSON.stringify({
+                from: "owner",
+                data: {
+                    orderId: item.orderId,
+                    orderStatus: "accept"
+                }
+            }))
             if (response.status === 200) {
                 const response2 = await axios.put(`api/order/${item.orderId}/delivery`);  //배달중으로 변경
             }
@@ -34,17 +54,20 @@ const OrderAccept = () => {
 
 
     const handleClickReject = async (item) => {
-        try {
-            console.log(item);
-            const response = await axios.delete(`api/order/${item.orderId}`); // 주문 거부
-            // 응답이 성공적이면 상태 업데이트하기
-            if (response.status === 200) {
 
+        console.log(item);
+        const response = await axios.delete(`api/order/${item.orderId}`);
+        conn.send(JSON.stringify({
+            from: "owner",
+            data: {
+                orderId: item.orderId,
+                orderStatus: "reject"
             }
-        } catch (error) {
-            console.error('Error:', error);
-        }
+        }))
+
     }
+
+
 
     const handleClickDelivered = async (item) => {
         // "배달완료" 버튼이 클릭되었을 때 실행할 로직을 여기에 작성합니다.
