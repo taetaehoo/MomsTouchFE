@@ -2,25 +2,27 @@ import React, {useEffect, useRef, useState} from 'react';
 import styles from '../styles/MenuModify.module.css';
 import axios from '../apis/AxiosInstance';
 import OptionInput from "./OptionInput";
+import {base_url} from "../config/config";
 
 const MenuModify = ({menu,shop,detail,discount}) => {
-    const [image, setImage] = useState('');
+    const [imageFile, setImageFile] = useState(null);
     const [menuName, setMenuName] = useState('');
     const [menuDesc, setMenuDesc] = useState('');
     const [price, setPrice] = useState('');
     const [option, setOption] = useState('');
     const [optionPrice, setOptionPrice] = useState('');
     const [optionSetPrice, setOptionSetPrice] = useState('');
-    const [discountPolicy, setDiscountPolicy] = useState(discount?.discountPolicy?.discountPolicyId || '');
+    const [discountPolicy, setDiscountPolicy] = useState(discount?.discountPolicy?.discountPolicyId || null);
     const [optionGroupList, setOptionGroupList] = useState([]);
+    const [imageUrl, setImageUrl] = useState("");
 
-    console.log(detail?.discountPolicy?.discountPolicyId);
+
+console.log(detail?.imageUrl);
+
 
     const handleOptionGroupList = (optionGroupList) => {
         setOptionGroupList(optionGroupList);
     };
-
-
 
     const changeMenu = value => {
         setMenuName(value);
@@ -32,60 +34,49 @@ const MenuModify = ({menu,shop,detail,discount}) => {
     const changeMenuDesc = value => {
         setMenuDesc(value);
     }
-    const changeOption = value => {
-        setOption(value);
-    }
-
-    const changeOptionPrice = value => {
-        setOptionPrice(value);
-    }
-    const changeOptionSetPrice = value => {
-        setOptionSetPrice(value);
-    }
 
 
+    useEffect(() => {
+        if (detail && detail.discountPolicy && detail.discountPolicy.discountPolicyId) {
+            setDiscountPolicy(detail.discountPolicy.discountPolicyId);
+
+        } else {
+            setDiscountPolicy(null); // 선택된 할인 정책이 없을 경우 초기화
+        }
+    }, [detail]);
 
     // 수정 버튼 클릭시 API 호출
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const menuUpdateRequest = {
-            image: image,
+
+        const menuUpdateRequest = {  //리퀘스트 폼
+            image: imageFile,
             menu: {
                 discountPolicyId: discountPolicy,
                 name: menuName,
                 description: menuDesc,
                 price: price,
                 category: "MAIN",
-                optionGroupList: [
-                    {
-                        name: "optionGroupList",
-                        optionList: [
-                            {
-                                name: option,
-                                price: 1000
+                optionGroupList: optionGroupList.map(group => {
+                    return {
+                        name: group.groupName, // 옵션 그룹 이름
+                        optionList: group.options.map(option => {
+                            return {
+                                name: option.option,
+                                price: option.optionPrice
                             }
-                        ]
-                    },
-                    {
-                        name: "음료 선택",
-                        optionList: [
-                            {
-                                name: "콜라",
-                                price: 1000
-                            }
-                        ]
+                        })
                     }
-
-                ],
-
+                }),
             }
         };
+
 
         let formData = new FormData();
         const json = JSON.stringify(menuUpdateRequest.menu);
         const blob = new Blob([json], { type: "application/json" });
-        formData.append("image",'');
+        formData.append('image', imageFile);
         formData.append("menu",blob);
 
 
@@ -104,15 +95,20 @@ const MenuModify = ({menu,shop,detail,discount}) => {
             <form className={styles.FormTag} onSubmit={handleSubmit}>
                 <br />
                 <br />
+                <img src={"http://172.30.125.92:8071" + detail?.imageUrl}/>
+
+                <input className={styles.InputTag} type="file" accept="image/*"
+                       onChange={(event) => {
+                           setImageFile(event.target.files[0]);
+                       }}
+                />
                 <input type={"text"} placeholder={"메뉴 이름"} defaultValue={menuName} onChange={e => changeMenu(e.target.value)}/>
                 <input type={"text"} placeholder={"메뉴 설명"} defaultValue={menuDesc} onChange={e => changeMenuDesc(e.target.value)}/>
                 <input type={"text"} placeholder={"가격"} defaultValue={price} onChange={e => changePrice(e.target.value)}/>
-                <input type={"text"} placeholder={"세트가격"} defaultValue={optionSetPrice} onChange={e => changeOptionSetPrice(e.target.value)}/>
                 <OptionInput handleOptionGroupList={handleOptionGroupList} />
 
                 <select
                     name="discountChoice"
-                    value={detail?.discountPolicy?.discountPolicyId || ""}
                     onChange={e => setDiscountPolicy(e.target.value)}
                 >
                     <option value="">--할인 정책 선택--</option>
