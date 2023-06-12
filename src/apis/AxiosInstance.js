@@ -5,6 +5,18 @@ const instance = axios.create({
     baseURL: base_url,
 });
 
+instance.interceptors.request.use(config => {
+    const token = sessionStorage.getItem('accessToken');
+
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+    }
+
+    return config;
+}, err => {
+    return Promise.reject(err);
+})
+
 instance.interceptors.response.use(
     resp => {
         if (resp.status === 404) {
