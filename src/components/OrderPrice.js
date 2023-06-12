@@ -1,10 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '../styles/OrderPrice.module.css'
+import axiosInstance from "../apis/AxiosInstance";
 const OrderPrice = ({list}) => {
+    const [basketList, setBasketList] = useState(null);
+
+    useEffect(() => {
+        axiosInstance.get(`/api/members/1/carts`)
+            .then(result => setBasketList(result.data))
+            .catch(err => console.log(err))
+    }, [])
+
+    useEffect(() => {
+        console.log(basketList)
+    }, [basketList])
 
     return (
         <>
-            <p className={styles.SumOfPrice}>총 주문 금액: <p className={styles.Price}>{list.reduce((prev, cur) => prev + cur.price, 0)}</p>원</p>
         </>
     );
 };

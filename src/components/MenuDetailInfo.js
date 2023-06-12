@@ -4,8 +4,8 @@ import axiosInstance from "../apis/AxiosInstance";
 
 const MenuDetailInfo = ({itemId, shopId}) => {
     const [menuInfo, setMenuInfo] = useState({})
-    useEffect( async () => {
-        await axiosInstance.get(`/api/shop/${shopId}/menus/${itemId}`)
+    useEffect(  () => {
+         axiosInstance.get(`/api/shop/${shopId}/menus/${itemId}`)
             .then(result => setMenuInfo(result.data))
             .catch(err => console.log(err))
     }, [])

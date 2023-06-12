@@ -1,20 +1,37 @@
-import React from 'react';
-import OrderList from "../components/OrderList";
-import OrderPrice from "../components/OrderPrice";
-import OrderButton from "../components/OrderButton";
+import React, {lazy, Suspense, useEffect, useState} from 'react';
+import axiosInstance from "../apis/AxiosInstance";
 
-const items = [
-    {id: 1, name: '햄', price: 10000}, {id: 2, name: '거', price: 5000}
-]
+const OrderList = lazy(() => import("../components/OrderList"));
+const OrderPrice = lazy(() => import("../components/OrderPrice"))
+const OrderButton = lazy(() => import("../components/OrderButton"));
+
+
 const OrderListPage = () => {
+    const [basketList, setBasketList] = useState(null);
+    useEffect(() => {
+        axiosInstance.get(`/api/members/1/carts`)
+            .then(result => setBasketList(result.data))
+            .catch(err => console.log(err))
+    }, [])
+
+    useEffect(() => {
+        console.log(basketList)
+    }, [basketList])
 
     // TODO `/api/members/{memberId}/carts 로 리스트 가져오기
     return (
         <>
-            <OrderList list = {items}/>
-            <OrderPrice list = {items}/>
+            <Suspense fallback={<div>Loading...</div>}>
+                <OrderList/>
+            </Suspense>
 
-            <OrderButton />
+            <Suspense fallback={<div>Loading...</div>}>
+                <OrderPrice/>
+            </Suspense>
+
+            <Suspense fallback={<div>Loading...</div>}>
+                <OrderButton/>
+            </Suspense>
         </>
     );
 };

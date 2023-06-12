@@ -8,34 +8,38 @@ const MenuPlusBtnContainer = ({itemId, shopId}) => {
     const [quantity, setQuantity] = useState(1);
     const [menuInfo, setMenuInfo] = useState(null);
     const [checkedItem, setCheckedItem] = useState([]);
-    useEffect(async () => {
-        await axiosInstance.get(`/api/shop/${shopId}/menus/${itemId}`)
+    useEffect(() => {
+        axiosInstance.get(`/api/shop/${shopId}/menus/${itemId}`)
             .then(result => setMenuInfo(result.data))
             .catch(err => console.log(err))
     }, [])
 
-    useEffect(() => {
-        console.log(menuInfo)
-    }, [menuInfo])
-
-    const data = []
+    let data = []
 
     const handleChange = event => {
+        const result = createCartGroup(event);
         if (event.target.checked) {
             //validate
-            createCartGroup(event);
+            data.push(result);
         }
-        //없애기.
+        else {
+            data = data.filter(tmp => JSON.stringify(tmp) !== JSON.stringify(result))
+        }
+
+        console.log(data)
     }
 
     const createCartGroup = (event) => {
         const price = getPrice(event.target.value, event.target.name);
-
+        const groupName = getGroupName(event.target.value);
+        const optionName = getOptionName(event.target.value, event.target.name);
         const list = {
-            menuOptionId: event.target.value,
-            menuOptionGroupList : [
+            menuOptionGroupId: Number(event.target.value),
+            menuOptionGroupName: groupName,
+            cartMenuOptionList : [
                 {
-                    menuOptionId: event.target.name,
+                    menuOptionId: Number(event.target.name),
+                    menuOptionName: optionName,
                     price: price,
                 }
             ]
@@ -45,9 +49,29 @@ const MenuPlusBtnContainer = ({itemId, shopId}) => {
     }
 
     const getPrice = (optionGroupId, optionId) => {
+        const optionGroupList = menuInfo.optionGroupList;
 
+        const findOptionGroup = optionGroupList.filter(optionGroup => optionGroup.optionGroupId == optionGroupId);
+        const options = findOptionGroup[0].optionList;
+        const optionPrice = options.filter(option => option.optionId == optionId);
+        return optionPrice[0].price;
+    }
 
+    const getGroupName = (optionGroupId) => {
+        const optionGroupList = menuInfo.optionGroupList;
 
+        const findOptionGroup = optionGroupList.filter(optionGroup => optionGroup.optionGroupId == optionGroupId);
+        return findOptionGroup[0].name;
+
+    }
+
+    const getOptionName = (optionGroupId, optionId) => {
+        const optionGroupList = menuInfo.optionGroupList;
+
+        const findOptionGroup = optionGroupList.filter(optionGroup => optionGroup.optionGroupId == optionGroupId);
+        const options = findOptionGroup[0].optionList;
+        const optionPrice = options.filter(option => option.optionId == optionId);
+        return optionPrice[0].name;
     }
 
     const plusBtn = () => {
@@ -56,6 +80,23 @@ const MenuPlusBtnContainer = ({itemId, shopId}) => {
 
     const minusBtn = () => {
         setQuantity(quantity-1 > 0 ? quantity -1 : quantity);
+    }
+
+    const clickEvent = () => {
+        const postData = {
+            menuId: menuInfo.menuId,
+            menuName: menuInfo.name,
+            discountPolicyId: menuInfo.discountPolicy.discountPolicyId,
+            quantity: quantity,
+            price: menuInfo.price,
+            cartMenuOptionGroupList: data
+        }
+
+        console.log(postData);
+
+        axiosInstance.post(`/api/members/1/carts`, postData)
+            .then(result => console.log(result))
+            .catch(err => console.log(err))
     }
 
 
@@ -72,7 +113,7 @@ const MenuPlusBtnContainer = ({itemId, shopId}) => {
             })}
         </ul>
             <ul></ul>
-            <ShopBasket/>
+            <ShopBasket click = {clickEvent} />
     </>
     );
 };
