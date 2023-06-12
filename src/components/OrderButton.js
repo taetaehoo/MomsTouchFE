@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import styles from '../styles/OrderButton.module.css';
 import axiosInstance from "../apis/AxiosInstance";
+import {useNavigate} from "react-router-dom";
 
 const OrderButton = () => {
     const [basketList, setBasketList] = useState([]);
     const [address, setAddress] = useState('');
     const [phoneNum, setPhoneNum] = useState('');
+
+    const navigator = useNavigate();
 
     const updateAddress = val => {
         setAddress(val);
