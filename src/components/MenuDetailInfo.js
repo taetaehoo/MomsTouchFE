@@ -8,6 +8,7 @@ const MenuDetailInfo = ({itemId, shopId}) => {
          axiosInstance.get(`/api/shop/${shopId}/menus/${itemId}`)
             .then(result => setMenuInfo(result.data))
             .catch(err => console.log(err))
+
     }, [])
 
     return (

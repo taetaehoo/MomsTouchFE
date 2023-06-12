@@ -11,6 +11,7 @@ const ItemList = () => {
             const result = await axiosInstance.get("/api/shop/1/menus");
             setItems(result.data);
             setMenus(result.data.menuList)
+
         }
 
         fetchData();
