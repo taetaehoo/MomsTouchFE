@@ -1,13 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '../styles/OrderList.module.css';
+import axiosInstance from "../apis/AxiosInstance";
 
 
 const OrderList = ({list}) => {
+    const [basketList, setBasketList] = useState(null);
+
+    useEffect(() => {
+        axiosInstance.get(`/api/members/1/carts`)
+            .then(result => setBasketList(result.data))
+            .catch(err => console.log(err))
+
+    }, [])
+
     return (
         <ul className={styles.DivUl}>
-            {list.map(item => {
-                return <li key={item.id} className={styles.DivLi}><p className={styles.ItemName}>{item.name}</p> <p className={styles.ItemPrice}>{item.price}원</p></li>
-            })}
+            {}
         </ul>
     );
 };
