@@ -1,0 +1,44 @@
+.DivUl {
+    width: 90vw;
+    margin: 3vh auto 0;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+}
+
+.DivLi {
+    display: flex;
+    flex-direction: row;
+}
+
+.DivLi:hover {
+    background: #61dafb;
+    transition: 0.5s;
+}
+
+.DivLi:hover .LiBox {
+    background: #61dafb;
+    transition: 0.5s;
+}
+
+.UlBox {
+    display: flex;
+    flex-direction: row;
+}
+
+.LiBox {
+    margin-right: 1vw;
+}
+
+.Status {
+    margin-right: 1vw;
+}
+
+.Address {
+    margin-right: 1vw;
+}
+
+.Phone {
+    margin-right: 1vw;
+}

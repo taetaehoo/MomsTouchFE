@@ -16,6 +16,10 @@ const MenuPlusBtnContainer = ({itemId, shopId}) => {
 
     let data = []
 
+    useEffect(() => {
+        console.log(menuInfo)
+    }, [menuInfo])
+
     const handleChange = event => {
         const result = createCartGroup(event);
         if (event.target.checked) {
@@ -86,7 +90,7 @@ const MenuPlusBtnContainer = ({itemId, shopId}) => {
         const postData = {
             menuId: menuInfo.menuId,
             menuName: menuInfo.name,
-            discountPolicyId: menuInfo.discountPolicy.discountPolicyId,
+            discountPolicyId: menuInfo.discountPolicy.id,
             quantity: quantity,
             price: menuInfo.price,
             cartMenuOptionGroupList: data
@@ -94,7 +98,7 @@ const MenuPlusBtnContainer = ({itemId, shopId}) => {
 
         console.log(postData);
 
-        axiosInstance.post(`/api/members/1/carts`, postData)
+        axiosInstance.post(`/api/carts`, postData)
             .then(result => console.log(result))
             .catch(err => console.log(err))
     }
