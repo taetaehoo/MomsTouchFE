@@ -2,7 +2,7 @@ import axios from "axios";
 import {base_url} from "../config/config";
 
 const instance = axios.create({
-    baseURL: "http://172.30.125.92:8071",});
+    baseURL: process.env.REACT_APP_BASE_URL,});
 
 instance.interceptors.request.use(config => {
     const token = sessionStorage.getItem('accessToken');
