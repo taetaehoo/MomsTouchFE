@@ -23,13 +23,21 @@ const ItemList = () => {
     }, [items])
 
     return (
-        <ul className={styles.DivUl}>
-            {
-             menus && menus.map(menu => {
-                 return <Link to={`/detail/${1}/${menu.menuId}`} className={styles.LinkTag}><li className={styles.DivLi} key={menu.menuId} ><img loading={"lazy"} src={process.env.REACT_APP_BASE_URL+`${menu.imageUrl}`}/><p>{menu.name}</p><p>{menu.price}원</p></li></Link>
-                })
-            }
-        </ul>
+        <>
+            <ul className={styles.DivUl}>
+                {
+                    menus && menus.map(menu => {
+                        return <Link to={`/detail/${1}/${menu.menuId}`} className={styles.LinkTag}>
+                            <li className={styles.DivLi} key={menu.menuId}><img loading={"lazy"}
+                                                                                src={process.env.REACT_APP_BASE_URL + `${menu.imageUrl}`}/>
+                                <p>{menu.name}</p><p>{menu.price}원</p></li>
+                        </Link>
+                    })
+                }
+            </ul>
+
+            <p>개방 시간: {items && items.openTime}</p> <p>폐쇄 시간: {items && items.closedTime}</p>
+        </>
     );
 };
 
