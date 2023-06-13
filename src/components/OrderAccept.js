@@ -24,7 +24,7 @@ const OrderAccept = () => {
             const response = await axios.post(`api/order/${item.orderId}`); // 주문접수
             // 응답이 성공적이면 상태 업데이트하기
             if (response.status === 200) {
-                const response2 = await axios.put(`api/order/${item.orderId}/delivery`);  //배달중으로 변경
+
             }
         } catch (error) {
             console.error('Error:', error);
@@ -47,6 +47,19 @@ const OrderAccept = () => {
     }
 
     const handleClickDelivered = async (item) => {
+        // "배달완료" 버튼이 클릭되었을 때 실행할 로직을 여기에 작성합니다.
+        try {
+            const response = await axios.put(`api/order/${item.orderId}/delivery`); // 여기에 실제 API URL을 대체하세요.
+            // 응답이 성공적이면 상태 업데이트하기
+            if (response.status === 200) {
+                // Do something...
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    const handleClickComplete = async (item) => {
         // "배달완료" 버튼이 클릭되었을 때 실행할 로직을 여기에 작성합니다.
         try {
             const response = await axios.put(`api/order/${item.orderId}/complete`); // 여기에 실제 API URL을 대체하세요.
@@ -83,7 +96,8 @@ const OrderAccept = () => {
                     <p className={styles.PTag}>{statusNum(item.status)}</p>
                     <p className={styles.PTag}>{addressNum(item.address)}</p>
                     {item.status === 'ORDER' && <button className={styles.BtnTag} onClick={() => handleClickAccept(item)}>수락</button>}
-                    {item.status === 'DELIVERY' && <button className={styles.BtnTag} onClick={() => handleClickDelivered(item)}>배달완료</button>}
+                    {item.status === 'ACCEPT' && <button className={styles.BtnTag} onClick={() => handleClickDelivered(item)}>배달보내기</button>}
+                    {item.status === 'DELIVERY' && <button className={styles.BtnTag} onClick={() => handleClickComplete(item)}>배달완료</button>}
                     <button className={styles.BtnTag} onClick={() => handleClickReject(item)}>거절</button>
                 </li>
             ))}

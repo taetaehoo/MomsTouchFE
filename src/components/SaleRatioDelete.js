@@ -21,11 +21,11 @@ const SaleRatioDelete = () => {
 
     const handleDiscountPolicyChange = (e) => {
         const selectedValue = e.target.value;
+        setDiscountPolicy(selectedValue);
         axios
             .get(`/api/shop/1/menus`)
             .then(response => {
                 setShowDiscountPolicy(response.data);
-                setDiscountPolicy(selectedValue);
                 console.log(discountPolicy);
             })
             .catch(error => {
@@ -40,6 +40,8 @@ const SaleRatioDelete = () => {
             .catch(err => console.log(err));
     };
 
+
+
     return (
         <div>
             {showOtherComponent ? (
@@ -48,7 +50,8 @@ const SaleRatioDelete = () => {
                 <form className={styles.FormTag}>
                     <select className={styles.select}
                             name="discountChoice"
-                            onClick={handleDiscountPolicyChange}>
+                            onClick={handleDiscountPolicyChange}
+                    onChange={handleDiscountPolicyChange}>
 
                         <option value="">--할인 정책 선택--</option>
                         {showDiscountPolicy?.discountList?.amountDiscountPolicyList?.map(policy => (
